@@ -1,0 +1,84 @@
+// NEXT ID: 3
+message Gdef {
+  // An ID to identify the file format, this string should always be
+  // set to "GDEF".
+  string id = 1;
+
+  // One or more data dumps in the file; each dump can contain
+  // information from different glucomters.
+  repeated Dump dump = 2;
+}
+
+// NEXT ID: 3
+message Dump {
+  // Information about the meter itself, rather than the readings of
+  // the dump.
+  MeterInfo meter_info = 1;
+
+  // Information of a single glucose reading (blood or otherwise.)
+  repeated Reading readings = 2;
+}
+
+// NEXT ID: 3
+enum GlucoseUnit {
+  UNKNOWN = 0;
+  MG_DL = 1;
+  MMOL_L = 2;
+}
+
+// NEXT ID: 5
+message MeterInfo {
+  string model = 1;
+
+  // A unique identifier for the glucometer. Serial numbers are usually unique
+  // both within a manufacturer and between them, so it should be enough to
+  // attach readings from the same meter together.
+  string serial_number = 2;
+
+  // One or more version information string, vastly unstructured but useful to
+  // identify possible changes in the device's software.
+  repeated string version_info = 3;
+
+  // The native unit that is displayed by the meter the data was dumped from. It
+  // might differ from the readings' unit, which is what the meter sends over
+  // the wire.
+  GlucoseUnit native_unit = 4;
+}
+
+message Reading {
+  // The unit in which the reading is given. It might be different from the
+  // meter's native unit. Depending on the unit, the reading will either have an
+  // integer_value (MG_DL), or a float_value (MMOL_L).
+  // Most meters send MG_DL over the wire for simplicity.
+  GlucoseUnit unit = 1;
+  oneof value {
+    int32 integer_value = 2;
+    float float_value = 3;
+  }
+
+  // Timestamp of the reading, expressed as seconds since UNIX epoch. Sub-second
+  // precision is not likely to be necessary for any glucometer.
+  int64 timestamp = 4;
+
+  // NEXT ID: 3
+  enum Meal {
+    NO_MEAL = 0;
+    BEFORE_MEAL = 1;
+    AFTER_MEAL = 2;
+  }
+  Meal meal_info = 5;
+
+  // NEXT ID: 4
+  enum ReadingType {
+    UNKNOWN = 0;
+    BLOOD_GLUCOSE = 1;
+    BLOOD_KETONE = 2;
+    INTERSTITIAL_FLUID = 3;
+  }
+  ReadingType type = 6;
+
+  bool control_solution = 7;
+
+  // Further unstructured comments, dependent on the device itself.
+  repeated string comments = 8;
+}
