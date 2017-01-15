@@ -64,7 +64,7 @@ message Reading {
 
   // NEXT ID: 3
   enum Meal {
-    UNKNOWN = 0;
+    UNKNOWN_MEAL = 0;
     NO_MEAL = 1;
     BEFORE_MEAL = 2;
     AFTER_MEAL = 3;
@@ -73,7 +73,7 @@ message Reading {
 
   // NEXT ID: 4
   enum ReadingType {
-    UNKNOWN = 0;
+    UNKNOWN_TYPE = 0;
     BLOOD_GLUCOSE = 1;
     BLOOD_KETONE = 2;
     INTERSTITIAL_FLUID = 3;
