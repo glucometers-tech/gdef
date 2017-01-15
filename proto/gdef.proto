@@ -1,3 +1,5 @@
+syntax = "proto3";
+
 // NEXT ID: 3
 message Gdef {
   // An ID to identify the file format, this string should always be
