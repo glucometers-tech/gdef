@@ -64,9 +64,10 @@ message Reading {
 
   // NEXT ID: 3
   enum Meal {
-    NO_MEAL = 0;
-    BEFORE_MEAL = 1;
-    AFTER_MEAL = 2;
+    UNKNOWN = 0;
+    NO_MEAL = 1;
+    BEFORE_MEAL = 2;
+    AFTER_MEAL = 3;
   }
   Meal meal_info = 5;
 
